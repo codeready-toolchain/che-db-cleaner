@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -29,6 +30,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("")
 public class CheDatabaseCleaner {
+    private static final Logger LOG = Logger.getLogger(CheDatabaseCleaner.class);
 
     @Inject
     AgroalDataSource dataSource;
@@ -43,12 +45,12 @@ public class CheDatabaseCleaner {
             try (Statement statement = connection.createStatement()) {
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM usr");
                 resultSet.next();
-                System.out.println("Result set:" + resultSet);
+                LOG.info("Result set:" + resultSet);
             } catch (SQLException e) {
-                System.out.println("Error processing statement: " + e);
+                LOG.error("Error processing statement: " + e);
             }
         } catch (SQLException e) {
-            System.out.println("Error processing connection: " + e);
+            LOG.error("Error processing connection: " + e);
         }
 
         return Response.ok(id, MediaType.TEXT_PLAIN).build();
