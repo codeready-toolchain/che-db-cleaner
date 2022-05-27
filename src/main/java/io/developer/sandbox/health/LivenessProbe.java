@@ -21,7 +21,7 @@ import org.eclipse.microprofile.health.Liveness;
 @ApplicationScoped
 public class LivenessProbe implements HealthCheck {
 
-	@Override
+    @Override
     public HealthCheckResponse call() {
         return HealthCheckResponse.up("Che Database Cleaner");
     }

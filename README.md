@@ -47,6 +47,30 @@ You can then execute your native executable with: `./target/che-db-cleaner-1.0.0
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
+## Creating an image
+
+To build a container image: 
+
+```shell script
+./mvnw clean package -Dquarkus.container-image.build=true
+```
+
+To push a container image to the registry:
+
+```shell script
+./mvnw clean package -Dquarkus.container-image.push=true
+
+```
+
+To build and push the native image to the registry:
+
+```shell script
+./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
+```
+
+The list of released images is available on [quay.io](https://quay.io/repository/ibuziuk/crw-multicluster-redirector?tab=tags)
+
+
 ## Related Guides
 
 - RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A JAX-RS implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
