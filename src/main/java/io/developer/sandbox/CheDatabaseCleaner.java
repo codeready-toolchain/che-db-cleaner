@@ -23,37 +23,35 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-
 import io.agroal.api.AgroalDataSource;
 
 import javax.ws.rs.core.MediaType;
 
-
 @Path("")
 public class CheDatabaseCleaner {
-	
-	@Inject
-	AgroalDataSource dataSource;
-	
-	@Path("{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	@DELETE
-	public Response deleteUserData(String id) {
-		
-		try (Connection connection = dataSource.getConnection()) {
-			System.out.println("Connection has been created: " + connection);
-			try (Statement statement = connection.createStatement()) {
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM usr");
-				resultSet.next();
-				System.out.println("Result set:" + resultSet);
-			} catch (SQLException e) {
+
+    @Inject
+    AgroalDataSource dataSource;
+
+    @Path("{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    @DELETE
+    public Response deleteUserData(String id) {
+
+        try (Connection connection = dataSource.getConnection()) {
+            System.out.println("Connection has been created: " + connection);
+            try (Statement statement = connection.createStatement()) {
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM usr");
+                resultSet.next();
+                System.out.println("Result set:" + resultSet);
+            } catch (SQLException e) {
                 System.out.println("Error processing statement: " + e);
             }
-		} catch (SQLException e) {
-			System.out.println("Error processing connection: " + e);
-		}
-		
-		return Response.ok(id, MediaType.TEXT_PLAIN).build();
-	}
+        } catch (SQLException e) {
+            System.out.println("Error processing connection: " + e);
+        }
+
+        return Response.ok(id, MediaType.TEXT_PLAIN).build();
+    }
 
 }
