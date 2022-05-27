@@ -68,7 +68,7 @@ To build and push the native image to the registry:
 ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true -Dquarkus.container-image.push=true
 ```
 
-The list of released images is available on [quay.io](https://quay.io/repository/ibuziuk/crw-multicluster-redirector?tab=tags)
+The list of released images is available on [quay.io](https://quay.io/repository/ibuziuk/che-db-cleaner?tab=tags)
 
 
 ## Related Guides
