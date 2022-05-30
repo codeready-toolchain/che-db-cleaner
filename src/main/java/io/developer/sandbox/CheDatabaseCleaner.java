@@ -40,11 +40,11 @@ public class CheDatabaseCleaner {
     public Response deleteUserData(String id) {
 
         try (Connection connection = dataSource.getConnection()) {
-            System.out.println("Connection has been created: " + connection);
+            LOG.info("Connection has been created: " + connection);
             try (Statement statement = connection.createStatement()) {
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM usr");
                 while (resultSet.next()) {
-                    LOG.info("Date:" + resultSet.getString(1));
+                    LOG.info("Data: " + resultSet.getString(1));
                 }
             } catch (SQLException e) {
                 LOG.error("Error processing statement: " + e);
