@@ -43,15 +43,15 @@ public class CheDatabaseCleaner {
             System.out.println("Connection has been created: " + connection);
             try (Statement statement = connection.createStatement()) {
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM usr");
-                resultSet.next();
-                LOG.info("Result set:" + resultSet);
+                while (resultSet.next()) {
+                    LOG.info("Date:" + resultSet.getString(1));
+                }
             } catch (SQLException e) {
                 LOG.error("Error processing statement: " + e);
             }
         } catch (SQLException e) {
             LOG.error("Error processing connection: " + e);
-        }
-
+        } 
         return Response.ok(id, MediaType.TEXT_PLAIN).build();
     }
 
