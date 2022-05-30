@@ -20,11 +20,10 @@ import java.sql.Statement;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-
-import io.agroal.api.AgroalDataSource;
 
 import javax.ws.rs.core.MediaType;
 
@@ -33,7 +32,7 @@ public class CheDatabaseCleaner {
     private static final Logger LOG = Logger.getLogger(CheDatabaseCleaner.class);
 
     @Inject
-    AgroalDataSource dataSource;
+    DataSource dataSource;
 
     @Path("{id}")
     @Produces(MediaType.TEXT_PLAIN)
