@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import org.jboss.logging.Logger;
 
+import io.developer.sandbox.validator.UUIDValidator;
+
 import javax.inject.Inject;
 import javax.sql.DataSource;
 import javax.ws.rs.DELETE;
@@ -34,25 +36,32 @@ public class CheDatabaseCleaner {
     @Inject
     DataSource dataSource;
 
-    @Path("{id}")
+    @Inject
+    UUIDValidator validator;
+
+    @Path("{uuid}")
     @Produces(MediaType.TEXT_PLAIN)
     @DELETE
-    public Response deleteUserData(String id) {
-
+    public Response deleteUserData(final String uuid) {
+        try {
+            validator.validate(uuid);
         try (Connection connection = dataSource.getConnection()) {
-            LOG.info("Connection has been created: " + connection);
+            LOG.debug("Connection has been created");
             try (Statement statement = connection.createStatement()) {
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM usr");
                 while (resultSet.next()) {
                     LOG.info("Data: " + resultSet.getString(1));
                 }
             } catch (SQLException e) {
-                LOG.error("Error processing statement: " + e);
+                LOG.error("Error processing statement", e);
             }
         } catch (SQLException e) {
-            LOG.error("Error processing connection: " + e);
-        } 
-        return Response.ok(id, MediaType.TEXT_PLAIN).build();
+            LOG.error("Error processing connection", e);
+        }
+        } catch (IllegalArgumentException e) {
+            LOG.error("{} is not valid UUID", uuid, e);
+        }
+        return Response.ok(uuid, MediaType.TEXT_PLAIN).build();
     }
 
 }
