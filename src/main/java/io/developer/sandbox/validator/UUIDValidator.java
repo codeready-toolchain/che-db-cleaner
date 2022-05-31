@@ -18,7 +18,6 @@ import javax.inject.Singleton;
 @Singleton
 public class UUIDValidator {
 
-
     public void validate(final String uuid) {
         UUID.fromString(uuid);
     }

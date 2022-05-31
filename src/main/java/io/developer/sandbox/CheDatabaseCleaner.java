@@ -48,7 +48,7 @@ public class CheDatabaseCleaner {
         try (Connection connection = dataSource.getConnection()) {
             LOG.info("Connection has been obtained");
             try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM usr where id=" + uuid);
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM usr WHERE id = " + uuid);
                 while (resultSet.next()) {
                     LOG.info("Data: " + resultSet.getString(1));
                 }
