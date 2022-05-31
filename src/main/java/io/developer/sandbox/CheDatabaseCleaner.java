@@ -46,22 +46,25 @@ public class CheDatabaseCleaner {
         try {
             validator.validate(uuid);
         try (Connection connection = dataSource.getConnection()) {
-            LOG.debug("Connection has been created");
+            LOG.info("Connection has been obtained");
             try (Statement statement = connection.createStatement()) {
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM usr");
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM usr where id=" + uuid);
                 while (resultSet.next()) {
                     LOG.info("Data: " + resultSet.getString(1));
                 }
             } catch (SQLException e) {
                 LOG.error("Error processing statement", e);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
         } catch (SQLException e) {
             LOG.error("Error processing connection", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         } catch (IllegalArgumentException e) {
             LOG.error("{} is not valid UUID", uuid, e);
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return Response.ok(uuid, MediaType.TEXT_PLAIN).build();
+        return Response.ok("Data for user '" + uuid + "' has been deleted", MediaType.TEXT_PLAIN).build();
     }
 
 }
