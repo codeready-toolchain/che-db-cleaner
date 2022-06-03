@@ -17,14 +17,14 @@ public class CheWorker {
 
     @Inject
     DataSource dataSource;
-    
+
     public void delete(final String uuid) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             LOG.info("Connection has been obtained for: " + CheWorker.class);
-
-            PreparedStatement deleteFromProfile = connection.prepareStatement(DELETE_FROM_CHE_WORKER);
-            deleteFromProfile.setString(1, uuid);
-            deleteFromProfile.execute();
+            try (PreparedStatement deleteFromCheWorker = connection.prepareStatement(DELETE_FROM_CHE_WORKER)) {
+                deleteFromCheWorker.setString(1, uuid);
+                deleteFromCheWorker.execute();
+            }
         }
     }
 }

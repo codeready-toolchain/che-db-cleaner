@@ -21,9 +21,10 @@ public class PreferencePreferences {
     public void delete(final String uuid) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             LOG.info("Connection has been obtained for " + PreferencePreferences.class);
-            PreparedStatement deleteFromProfile = connection.prepareStatement(DELETE_FROM_PREFERENCE_PREFERENCES);
-            deleteFromProfile.setString(1, uuid);
-            deleteFromProfile.execute();
+            try (PreparedStatement deleteFromPreferencePreferences = connection.prepareStatement(DELETE_FROM_PREFERENCE_PREFERENCES)) {
+                deleteFromPreferencePreferences.setString(1, uuid);
+                deleteFromPreferencePreferences.execute();
+            };
         }
     }
 }

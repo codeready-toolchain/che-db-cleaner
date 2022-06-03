@@ -48,14 +48,15 @@ public class Usr {
     private void deleteCheWorkerActions(final String uuid) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             // getting che_worker ids related to the user uuid
-            PreparedStatement selectFromWorker = connection.prepareStatement(SELECT_FROM_WORKER);
-            selectFromWorker.setString(1, uuid);
-            ResultSet workers = selectFromWorker.executeQuery();
-            while (workers.next()) {
-                // deleting entries from the 'che_worker_actions' based on the che_worker id
-                String workerId = workers.getString(WORKER_ID_COLUMN_LABEL);
-                LOG.info("Worker Id: " + workerId);
-                cheWorkerActions.delete(workerId);
+            try (PreparedStatement selectFromWorker = connection.prepareStatement(SELECT_FROM_WORKER)) {
+                selectFromWorker.setString(1, uuid);
+                ResultSet workers = selectFromWorker.executeQuery();
+                while (workers.next()) {
+                    // deleting entries from the 'che_worker_actions' based on the che_worker id
+                    String workerId = workers.getString(WORKER_ID_COLUMN_LABEL);
+                    LOG.info("Worker Id: " + workerId);
+                    cheWorkerActions.delete(workerId);
+                }
             }
         }
     }
@@ -67,8 +68,9 @@ public class Usr {
     private void deleteUsr(final String uuid) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             // Removing the entry from the 'usr' table
-            PreparedStatement deleteFromUsr = connection.prepareStatement(DELETE_FROM_USR);
-            deleteFromUsr.setString(1, uuid);
+            try (PreparedStatement deleteFromUsr = connection.prepareStatement(DELETE_FROM_USR)) {
+                deleteFromUsr.setString(1, uuid);
+            };
         }
     }
 
