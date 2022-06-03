@@ -86,7 +86,7 @@ public class Usr {
     private void deleteUsr(final String uuid) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             // Removing the entry from the 'usr' table
-            LOG.info("Connection has been obtained for " + Usr.class);
+            LOG.info("Connection has been obtained for: " + Usr.class);
             try (PreparedStatement deleteFromUsr = connection.prepareStatement(DELETE_FROM_USR)) {
                 deleteFromUsr.setString(1, uuid);
             }
@@ -102,7 +102,7 @@ public class Usr {
                 while (workers.next()) {
                     // deleting entries from the 'che_worker_actions' based on the che_worker id
                     String workerId = workers.getString(ID_COLUMN_LABEL);
-                    LOG.info("Worker Id: " + workerId);
+                    LOG.info("Deleting Worker: " + workerId);
                     cheWorkerActions.delete(workerId);
                 }
             }
