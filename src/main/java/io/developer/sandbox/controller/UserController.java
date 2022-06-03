@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
-import io.developer.sandbox.db.CheDatabaseCleaner;
+import io.developer.sandbox.CheDatabaseCleaner;
 import io.developer.sandbox.validator.UUIDValidator;
 
 @Path("")
@@ -49,7 +49,7 @@ public class UserController {
             LOG.error("Error processing database connection / statement", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        return Response.ok("Data for user '" + uuid + "' has been deleted", MediaType.TEXT_PLAIN).build();
+        return Response.ok("Data for user '" + uuid + "' has been succesfully deleted", MediaType.TEXT_PLAIN).build();
     }
 
 }
