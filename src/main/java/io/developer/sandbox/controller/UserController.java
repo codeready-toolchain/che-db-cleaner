@@ -49,6 +49,7 @@ public class UserController {
             LOG.error("Error processing database connection / statement", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+        LOG.info("Data for user '" + uuid + "' has been succesfully deleted");
         return Response.ok("Data for user '" + uuid + "' has been succesfully deleted", MediaType.TEXT_PLAIN).build();
     }
 

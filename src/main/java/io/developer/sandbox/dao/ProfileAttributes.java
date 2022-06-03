@@ -20,10 +20,10 @@ public class ProfileAttributes {
 
     public void delete(final String uuid) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
-            LOG.info("Connection has been obtained for: " + Profile.class);
-            try (PreparedStatement deleteFromProfile = connection.prepareStatement(DELETE_FROM_PROFILE_ATTRIBUTES)) {
-                deleteFromProfile.setString(1, uuid);
-                deleteFromProfile.execute();
+            LOG.info("Connection has been obtained for: " + ProfileAttributes.class);
+            try (PreparedStatement deleteFromProfileAttributes = connection.prepareStatement(DELETE_FROM_PROFILE_ATTRIBUTES)) {
+                deleteFromProfileAttributes.setString(1, uuid);
+                deleteFromProfileAttributes.execute();
             }
         }
     }
