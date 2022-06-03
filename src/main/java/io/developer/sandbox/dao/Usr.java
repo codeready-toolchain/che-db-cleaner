@@ -46,20 +46,33 @@ public class Usr {
     @Inject
     CheWorkerActions cheWorkerActions;
 
+    @Inject
+    Profile profile;
+
+    @Inject
+    ProfileAttributes profileAttributes;
+
     public void delete(final String uuid) throws SQLException {
         deletePreferences(uuid);
         deleteCheWorkerActions(uuid);
         deleteCheWorker(uuid);
 
         deleteWorkspaces(uuid);
+
+        deleteProfile(uuid);
         deleteAccount(uuid);
         deleteUsr(uuid);
-     
+
     }
 
     private void deletePreferences(final String uuid) throws SQLException {
         preferencePreferences.delete(uuid);
         preference.delete(uuid);
+    }
+
+    private void deleteProfile(final String uuid) throws SQLException {
+        profileAttributes.delete(uuid);
+        profile.delete(uuid);
     }
 
     private void deleteCheWorker(final String uuid) throws SQLException {
