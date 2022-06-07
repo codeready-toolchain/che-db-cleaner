@@ -97,6 +97,8 @@ public class Usr {
             LOG.info("Connection has been obtained for: " + Usr.class);
             try (PreparedStatement deleteFromUsr = connection.prepareStatement(DELETE_FROM_USR)) {
                 deleteFromUsr.setString(1, uuid);
+                LOG.info("Deleting user: " + uuid);
+                deleteFromUsr.execute();
             }
         }
     }
