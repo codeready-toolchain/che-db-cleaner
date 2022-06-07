@@ -48,6 +48,9 @@ public class Usr {
 
     @Inject
     Profile profile;
+    
+    @Inject
+    UserDevfile userDevfile;
 
     @Inject
     ProfileAttributes profileAttributes;
@@ -56,6 +59,7 @@ public class Usr {
         deletePreferences(uuid);
         deleteCheWorkerActions(uuid);
         deleteCheWorker(uuid);
+        deleteUserDevfile(uuid);
 
         deleteWorkspaces(uuid);
 
@@ -81,6 +85,10 @@ public class Usr {
 
     private void deleteAccount(final String uuid) throws SQLException {
         account.delete(uuid);
+    }
+
+    private void deleteUserDevfile(final String uuid) throws SQLException {
+        userDevfile.delete(uuid);
     }
 
     private void deleteUsr(final String uuid) throws SQLException {
