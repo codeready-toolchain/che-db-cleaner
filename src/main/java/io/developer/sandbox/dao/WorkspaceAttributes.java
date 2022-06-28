@@ -21,9 +21,9 @@ public class WorkspaceAttributes {
     public void delete(final String id) throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             LOG.info("Connection has been obtained for: " + WorkspaceAttributes.class);
-            try (PreparedStatement deleteFromWorkspace = connection.prepareStatement(DELETE_FROM_WORKSPACE_ATTRIBUTES)) {
-                deleteFromWorkspace.setString(1, id);
-                deleteFromWorkspace.execute();
+            try (PreparedStatement deleteFromWorkspaceAttributes = connection.prepareStatement(DELETE_FROM_WORKSPACE_ATTRIBUTES)) {
+                deleteFromWorkspaceAttributes.setString(1, id);
+                deleteFromWorkspaceAttributes.execute();
             }
         }
     }

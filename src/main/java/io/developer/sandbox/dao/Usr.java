@@ -38,17 +38,26 @@ public class Usr {
     WorkspaceAttributes workspaceAttributes;
 
     @Inject
+    WorkspaceConfig workspaceConfig;
+
+    @Inject
     CheWorkspaceActivity cheWorkspaceActivity;
 
     @Inject
     Workspace workspace;
+    
+    @Inject
+    SSHKeyPair sshKeyPair;
 
     @Inject
     CheWorkerActions cheWorkerActions;
 
     @Inject
+    CheSignKeyPair cheSignKeyPair;
+
+    @Inject
     Profile profile;
-    
+
     @Inject
     UserDevfile userDevfile;
 
@@ -57,6 +66,7 @@ public class Usr {
 
     public void delete(final String uuid) throws SQLException {
         deletePreferences(uuid);
+        deleteSSHKeyPair(uuid);
         deleteCheWorkerActions(uuid);
         deleteCheWorker(uuid);
         deleteUserDevfile(uuid);
@@ -72,6 +82,10 @@ public class Usr {
     private void deletePreferences(final String uuid) throws SQLException {
         preferencePreferences.delete(uuid);
         preference.delete(uuid);
+    }
+    
+    private void deleteSSHKeyPair(final String uuid) throws SQLException {
+        sshKeyPair.delete(uuid);
     }
 
     private void deleteProfile(final String uuid) throws SQLException {
@@ -132,6 +146,9 @@ public class Usr {
 
                     workspaceAttributes.delete(workspaceId);
                     cheWorkspaceActivity.delete(workspaceId);
+                    // TODO: also cleanup cheSignKey ?
+                    cheSignKeyPair.delete(workspaceId);
+                    workspaceConfig.delete(workspaceId);
                     workspace.delete(workspaceId);
                 }
             }
