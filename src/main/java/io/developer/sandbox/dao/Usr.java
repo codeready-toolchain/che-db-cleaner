@@ -84,6 +84,7 @@ public class Usr {
         try (Connection connection = dataSource.getConnection()) {
             LOG.info("Connection has been obtained for: " + Usr.class);
             try (PreparedStatement selectFromUsr = connection.prepareStatement(SELECT_FROM_USR)) {
+                selectFromUsr.setString(1, uuid);
                 ResultSet usr = selectFromUsr.executeQuery();
                 return usr.next();
             }
