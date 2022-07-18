@@ -15,6 +15,7 @@ import org.jboss.logging.Logger;
 public class Usr {
     private static final Logger LOG = Logger.getLogger(Usr.class);
     private static final String ID_COLUMN_LABEL = "id";
+    private static final String SELECT_FROM_USR = "SELECT * FROM usr WHERE id = ?";
     private static final String SELECT_FROM_WORKER = "SELECT id FROM che_worker WHERE user_id = ?";
     private static final String SELECT_FROM_WORKSPACE = "SELECT id FROM workspace WHERE accountid = ?";
     private static final String DELETE_FROM_USR = "DELETE FROM usr WHERE id = ?";
@@ -77,6 +78,16 @@ public class Usr {
         deleteAccount(uuid);
         deleteUsr(uuid);
 
+    } 
+
+    public boolean exists(final String uuid) throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            LOG.info("Connection has been obtained for: " + Usr.class);
+            try (PreparedStatement selectFromUsr = connection.prepareStatement(SELECT_FROM_USR)) {
+                ResultSet usr = selectFromUsr.executeQuery();
+                return usr.next();
+            }
+        }
     }
 
     private void deletePreferences(final String uuid) throws SQLException {

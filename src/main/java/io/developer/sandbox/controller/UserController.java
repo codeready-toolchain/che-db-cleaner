@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -48,6 +49,9 @@ public class UserController {
         } catch (SQLException e) {
             LOG.error("Error processing database connection / statement", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (NotFoundException e) {
+            LOG.error("User '" + uuid + "' not found in the databse", e);
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
         LOG.info("Data for user '" + uuid + "' has been succesfully deleted");
         return Response.ok("Data for user '" + uuid + "' has been succesfully deleted", MediaType.TEXT_PLAIN).build();

@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.NotFoundException;
 
 import org.jboss.logging.Logger;
 
@@ -27,9 +28,13 @@ public class CheDatabaseCleaner {
     @Inject
     Usr usr;
 
-    public void clean(final String uuid) throws SQLException {
+    public void clean(final String uuid) throws SQLException, NotFoundException {
         LOG.info("Deleting the data for user: " + uuid + "...");
-        usr.delete(uuid);
+        if (usr.exists(uuid)) {
+            usr.delete(uuid);
+        } else {
+            throw new NotFoundException();
+        }
     }
 
 }
