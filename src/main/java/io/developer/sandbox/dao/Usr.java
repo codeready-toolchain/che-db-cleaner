@@ -160,7 +160,8 @@ public class Usr {
                     cheWorkspaceActivity.delete(workspaceId);
                     // TODO: also cleanup cheSignKey ?
                     cheSignKeyPair.delete(workspaceId);
-                    workspaceConfig.delete(workspaceId);
+                    // `select * from workspaceconfig;` is empty and is treated as obsolete
+                    // workspaceConfig.delete(workspaceId);
                     workspace.delete(workspaceId);
                 }
             }
